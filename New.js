@@ -5,25 +5,31 @@ function addToCart(item) {
 }
 
 function removeFromCart(itemName) {
-    //searching for the item in the cart using .includes()
+    //iterating through all the items in the cart
     for(var i = 0; i < shoppingCart.length; i++) {
      if(shoppingCart[i].name === itemName) {
              shoppingCart[i].quantity--;
             if(shoppingCart[i].quantity === 0) {
                 shoppingCart.splice(shoppingCart[i], 1);
             }
+            //recalculating the cost after removing an item
             totalCost();
             break;
          }
      }
 }
 
-function removeAllFromCart() {
-    while(shoppingCart.length > 0)
-    {
-        shoppingCart.pop();
+function createNewCart() {
+    //if new cart is empty then no point of running the while loop, best case O(1) 
+    if(shoppingCart.length === 0){
+        return;
     }
-    totalCost();
+    else {
+        while(shoppingCart.length > 0){
+            shoppingCart.pop();
+        }
+        totalCost();
+    }
 }
 
 function totalCost() {
@@ -39,21 +45,9 @@ function totalCost() {
     return Math.round(total * 100) / 100;
 }
 
-var newItem = {name: "Apple", price: 4.95, quantity: 2};
-var thirdItem = {name: "Orange", price: 3.99, quantity: 1};
-
-// addToCart(newItem);
-// addToCart(thirdItem);
-// console.log(shoppingCart);
-// removeAllFromCart();
-// console.log(shoppingCart);
-// removeFromCart("Apple");
-// console.log(shoppingCart);
-// console.log(totalCost());
-
 export {
     addToCart,
     removeFromCart,
-    removeAllFromCart,
+    createNewCart,
     totalCost
 };
